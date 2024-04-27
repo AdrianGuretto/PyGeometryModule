@@ -3,8 +3,9 @@
 from typing import List, Tuple, Generator
 import itertools
 import math
+from .polygon import Polygon
 
-def gen_rectangle() -> List[Tuple[float, float]]:
+def gen_rectangle() -> Polygon:
     """
     Генерация прямоугольника.
 
@@ -16,23 +17,30 @@ def gen_rectangle() -> List[Tuple[float, float]]:
     x2, y2 = x1 + width, y1
     x3, y3 = x1 + width, y1 + height
     x4, y4 = x1, y1 + height
-    return [(x1, y1), (x2, y2), (x3, y3), (x4, y4)]
+    verts = [(x1, y1), (x2, y2), (x3, y3), (x4, y4)]
+    return Polygon(verts)
 
-def gen_triangle() -> List[Tuple[float, float]]:
+def gen_triangle() -> Polygon:
     """
     Генерация треугольника.
 
     Returns:
-    - List[Tuple[float, float]]: Список координат вершин треугольника.
+    - List[Polygo[float, float]]: Список координат вершин треугольника.
     """
     x1, y1 = 0, 0
     x2, y2 = 1, 0
     x3, y3 = 0.5, math.sqrt(3) / 2
-    return [(x1, y1), (x2, y2), (x3, y3)]
+    verts = [(x1, y1), (x2, y2), (x3, y3)]
+    return Polygon(verts)
 
-def gen_hexagon() -> List[Tuple[float, float]]:
+#def gen_hexagon(last_hexagon_coords: List[float, float], diagonal=False) -> List[Tuple[float, float]]:
+def gen_hexagon() -> Polygon:
     """
     Генерация правильного шестиугольника.
+
+    Parameters:
+    - last_hexagon_coords: Tuple[float, float] - Координаты предыдущего гексагона
+    - diagonal: bool - Флаг, обозначающий генерировать ли следующий гексагон по диагонали вверх
 
     Returns:
     - List[Tuple[float, float]]: Список координат вершин шестиугольника.
@@ -44,15 +52,15 @@ def gen_hexagon() -> List[Tuple[float, float]]:
         x = math.cos(angle_rad)
         y = math.sin(angle_rad)
         vertices.append((x, y))
-    return vertices
+    return Polygon(vertices)
 
-def generate_shapes() -> Generator[List[Tuple[float, float]], None, None]:
+def generate_shapes() -> Generator[List[Polygon], None, None]:
     """
     Генерация различных фигур.
 
     Yields:
     - List[Tuple[float, float]]: Список координат вершин фигуры.
     """
-    generators = [gen_rectangle, gen_triangle, gen_hexagon]
+    generators = [gen_triangle, gen_rectangle, gen_hexagon]
     for generator in itertools.cycle(generators):
         yield generator()
