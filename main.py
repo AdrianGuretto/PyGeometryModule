@@ -3,15 +3,15 @@ from src import operations
 from src import visualization
 
 # Генерация фигур
-shapes_generator = generator.generate_shapes()
-figures = [next(shapes_generator) for _ in range(1)]
+shapes_generator = generator.generate_shapes("треугольник", 5) # изменить тип фигуры на другой можно здесь
+figures = [next(shapes_generator) for _ in range(5)] # изменить количество фигур можно здесь
 
 # Визуализация исходных фигур
 print("Исходные фигуры:")
+
 visualization.visualize(figures)
 
 # Применение операций
-
 translated_figures = operations.tr_translate(figures, (2, 2))
 rotated_figures = operations.tr_rotate(figures, 45)
 symmetric_figures = operations.tr_symmetry(figures, (0, 0))
