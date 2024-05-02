@@ -68,20 +68,6 @@ def gen_rect(last_square: patches.Rectangle, angle: int = 0, max_depth: int = 10
     for rect in gen_rect(new_square, angle, max_depth - 1):
         yield rect
 
-
-def gen_triangles(last_triangle: patches.RegularPolygon, angle: int = 0) -> Generator[patches.RegularPolygon, None, None]:
-    """
-    Получить генератор для объектов треугольника.
-
-    Параметры:
-        - last_triangle: patches.RegularPolygon - объект последнего треугольника
-        - angle: int - угол, под которым генерировать следующий объект
-
-    Результат:
-        Генератор объектов треугольника с разумным отступом.
-    """
-    side_len = 3
-
 def gen_triangle(last_triangle: patches.RegularPolygon, angle: int = 0, max_depth: int = 10) -> Generator[patches.RegularPolygon, None, None]:
     """
     Получить генератор для объектов треугольника.
@@ -136,24 +122,6 @@ def gen_hexagons(last_hex: patches.RegularPolygon, angle=0, max_depth:int=10) ->
     """
     axis_num = 6
     size_num = 2
-
-
-def gen_polygons(last_poly: patches.RegularPolygon, axis_num: int, angle: int=0) -> Generator[patches.RegularPolygon, None, None]:
-    """
-    Получить генератор для объектов полигона.
-
-    Параметры:
-        - last_poly: patches.RegularPolygon - объект последнего треугольника, под который генерировать следующие
-        - axis_num: int - количество углов у полигона
-        - angle: int - угол, под которым генерировать следующий объект
-
-    Результат:
-        Генератор объектов полигонов с разумным отступом.
-    """
-    axis_arr: List[Axes] = last_poly.get_figure().get_axes()
-
-from typing import Generator
-import matplotlib.patches as patches
 
 def gen_hexagon(last_hex: patches.RegularPolygon, angle: int = 0, max_depth: int = 10) -> Generator[patches.RegularPolygon, None, None]:
     """
