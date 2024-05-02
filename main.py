@@ -1,25 +1,28 @@
-from src import generator
-from src import operations
-from src import visualization
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from src.generator import gen_rect, gen_triangle
 
-# Генерация фигур
-shapes_generator = generator.generate_shapes("треугольник", 5) # изменить тип фигуры на другой можно здесь
-figures = [next(shapes_generator) for _ in range(5)] # изменить количество фигур можно здесь
+# Создать первый прямоугольник
+first_square = patches.Rectangle(xy=(0, 0), width=4, height=3, color='green', alpha=0.4, angle=45)
+first_triangle = patches.RegularPolygon(xy=(4, -3), numVertices=3, radius=1, orientation=315,
+                                        color='blue', alpha=0.4)
 
-# Визуализация исходных фигур
-print("Исходные фигуры:")
+# Создать фигуру и оси для отображения прямоугольников
+fig, ax = plt.subplots()
+ax.add_patch(first_square)
 
-visualization.visualize(figures)
+# Сгенерировать последующие прямоугольники
+for rect in gen_rect(first_square, angle=45):
+    ax.add_patch(rect)
 
-# Применение операций
-translated_figures = operations.tr_translate(figures, (2, 2))
-rotated_figures = operations.tr_rotate(figures, 45)
-symmetric_figures = operations.tr_symmetry(figures, (0, 0))
-homothetic_figures = operations.tr_homothety(figures, 2)
+# Сгенерировать последующие треугольники
+for triangle in gen_triangle(first_triangle, angle=120):
+    ax.add_patch(triangle)
 
-# Визуализация преобразованных фигур
-print("Преобразованные фигуры:")
-visualization.visualize(translated_figures)
-visualization.visualize(rotated_figures)
-visualization.visualize(symmetric_figures)
-visualization.visualize(homothetic_figures)
+# Настроить оси
+ax.set_xlim(-5, 5)
+ax.set_ylim(-5, 5)
+ax.set_aspect('equal')
+
+# Показать результат
+plt.show()
